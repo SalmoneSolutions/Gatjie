@@ -2,278 +2,350 @@
 <html>
 
 <head>
-<title>Get Me There Index</title>
- <!-- Compiled and minified CSS -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
-  <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <!-- Compiled and minified JavaScript -->
-  
-<style>
-     html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      #map {
-      	width: 100%;
-        height: 450px;
-      }
-      .nearby_ranks{
-      	height: 100%;
-      }
-</style>
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
- 
+    <title>Get Me There Index</title>
+    <!-- Compiled and minified CSS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+    <link rel='stylesheet' type='text/css' href='css/main.css'>
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Compiled and minified JavaScript -->
+
+    <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            width: 100%;
+            height: 450px;
+        }
+    </style>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="/js/typed.js"></script>
+    <script>
+      $(function(){
+          $(".hero-text h4").typed({
+            strings: ["","  "," ","Trying to get somewhere in SA ?","but you really don't know how to ?","No worries your gatjie is here","just click the button below","and he'll tell you how to get there","Gatjie","Your Mzansi guide to minibus taxis"],
+            typeSpeed: 20,
+            backDelay: 1000,
+          });
+      });
+
+    </script>
 </head>
 
-<body class='yellow container'>
+<body>
+    <div class="fullscreen-bg">
+      <video loop muted autoplay poster="img/videoframe.jpg" class="fullscreen-bg__video">
+          <source src="videoback.mp4" type="video/mp4">          
+      </video>
+    </div>
 
-	<div class="row" id="locationData" >
+    <div class='hero-box--black_opaque'>
+      <div class='container header'>
+        <div class='container logo-header-hero'>
+          <img src='/images/logo.png'>
+        </div>
+        <div class='hero-text white-text'>
+          <h4></h4>
+        </div>
+        <div class='scroll'>
+          <img src='/images/arrow-.png'>
+        </div>
+      </div>
+    </div>
+    <div class="row hero-box--black_opaque" id="locationData">
 
-		
-				
-				<div class='center blue darken-1 card-panel col m7 s12'>
-					<h4 class='flow-text'><small><b>Where are you going ?</b></small></h3>
-					<h6> Nearest taxis to you are in  <b> {{ranks.0.name}} </b> </h6> 
-					<p style='display:none;' id='latitude'>{{currentLocation.latitude}}</p>
-					<p style='display:none;' id='longitude'>{{currentLocation.longitude}}</p>
-					<p style='display:none;' id='des_latitude'>{{destinationLocation.latitude}}</p>
-					<p style='display:none;' id='des_longitude'>{{destinationLocation.longitude}}</p>
-				  	<div id='serching' class="form-group col s12 right">
-				    	<input type="text" id='search' class=" col s10 m12 white form-control right " placeholder="Search Destination">
-				    	
-				    	<ul id='dropdown1' class='dropdown-content col s12 m12'>
-						    <li class='col s12 m12'><a href="#!">searching...</a></li>
-						    
-						</ul>
-				  	</div>
-				  	<br>
-				  	<br>
-				  	<h5><small> Here's how you get there</small></h5>
-				  	<div id="map" class='col s12'></div>
-					<br>
-					<br> <small class='black-text '>GET ME THERE &trade;</small> 
-				</div>
-			
-	
 
-				<div class="nearby_ranks yellow col s12 m5">
-					
-						<h2 class='flow-text'>nearby minibus taxi's can be found at these locations</h2>
+        <div class="nearby_ranks transparent col s12 m12 l2">
+            <div class='card-panel center '>
+                <img src='/images/getmether1.png' height='100px'>
+                <br>
+                <small> The directions to this taxi rank have been voted {{ranks.0.accuracy}} times as accurate</small>
+            </div>
+            <ul class="card-panel collapsible col s12 m12" data-collapsible="accordion">
 
-						<div id="ranks-near">
-							
-							  <ul class="white collapsible col s12 m12" data-collapsible="accordion">
-							  {{#ranks}}
-							    <li id='{{rank_id}}' onclick ='mapLocation({{latitude}},{{longitude}})'>
+                <li>
+                    <div class="collapsible-header">
+                        <small><b>Accurate ?</b></small>
+                        <i class="material-icons">verified_user</i>
+                    </div>
+                    <div class="collapsible-body">
+                        <div class='row'>
+                            <form method='POST' class='container' action='/rank/accurate/1'>
+                                <input id="submit" type='submit' class='btn blue' type="text" class="validate" value='Yes'>
+                            </form>
+                        </div>
+                        <div class='row'>
+                            <form method='POST' class='container' action='/rank/accurate/0'>
+                                <input id="submit" type='submit' class='btn red' type="text" class="validate" value='NO'>
+                            </form>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="collapsible-header">
+                        <small><b>Add taxi rank</b></small>
+                        <i class="material-icons">add_circle</i>
+                    </div>
+                    <div class="collapsible-body">
 
-							      <div class="collapsible-header">
-							      <i class="material-icons">location_on</i><small><b> {{name}}</b></small> 
+                        <div class="row">
+                            <small>
+                        <form method='POST' action='/rank/add'>
+                          <div class="row">
+                            <div class="input-field col s12">
+                              <input placeholder="Placeholder" id="first_name" type="text" class="validate" required="true">
+                              <label for="first_name"> Rank Name</label>
+                            </div>
+                            <div class="input-field col s12">
+                              <input id="last_name" type="text" class="validate" required="true">
+                              <label for="last_name">Lattitude</label>
+                            </div>
+                            <div class="input-field col s12">
+                              <input id="Longitude" type="text" class="validate" required="true">
+                              <label for="Longitude">Longitude</label>
+                            </div>
+                            <div class="input-field col s12">
+                              <input id="Opening_Time" type="text" class="validate" required="true">
+                              <label for="Opening_Time">Opening Time</label>
+                            </div>
+                            <div class="input-field col s12">
+                              <input id="Closing_Time" type="text" class="validate" required="true">
+                              <label for="Closing_Time">Closing Time</label>
+                            </div>
+                            <div class="input-field col s12">
+                              <input id="submit" type='submit'class='btn' type="text" class="validate" required="true">
+                            </div>
+                          </div>
 
-						
-							      	<small class='blue-text accent-3'>Hours {{opening_time}}  - {{closing_time}} </small>
-							       </div>
-							      <div class="collapsible-body"><p>
 
-							      {{#routes}}
+                        </form>
+                      </small>
+                        </div>
 
-                                   <small class="collection-item">{{route_name}}  <b>R{{price}}</b></small><br/>                           
+                    </div>
+                </li>
+            </ul>
+
+        </div>
+        <div class='center  col s12 m12 l6'>
+            <div class='card-panel main-heading'>
+                <h5 class='black-text'> GET ME THERE</h5></div>
+            <div class="red lighthen-2 accent-2 col m12 s12">
+                <h6> Nearest taxis to you are in  <b> {{ranks.0.name}} </b> </h6>
+                <p style='display:none;' id='latitude'>{{currentLocation.latitude}}</p>
+                <p style='display:none;' id='longitude'>{{currentLocation.longitude}}</p>
+                <p style='display:none;' id='des_latitude'>{{destinationLocation.latitude}}</p>
+                <p style='display:none;' id='des_longitude'>{{destinationLocation.longitude}}</p>
+                <div id="map" class='col s12 '></div>
+                <br>
+                <br> <small class='black-text '>GET ME THERE &trade;</small>
+            </div>
+        </div>
+        <div class="nearby_ranks transparent col s12 m12 l4">
+            <div class='card-panel '>
+                <h2 class='flow-text'>Nearby minibus taxi's can be found at these locations</h2></div>
+            <div id="ranks-near">
+                <ul class="card-panel collapsible col s12 m12" data-collapsible="accordion">
+                    {{#ranks}}
+                        <li id='{{rank_id}}' onclick='mapLocation({{latitude}},{{longitude}})'>
+                            <div class="collapsible-header">
+                                <i class="material-icons">location_on</i><small><b> {{name}}</b></small>
+                            </div>
+                            <div class="collapsible-body">
+                                <p>
+                                    <small class='blue-text accent-3'>Hours {{opening_time}}  - {{closing_time}} </small>
+                                    {{#routes}}
+                                        <small class="collection-item">{{route_name}}  <b>R{{price}}</b></small><br/>
                                     {{/routes}}
-							       </p></div>
-							    </li>
-
-							    {{/ranks}}
-							   </ul>
-								
-							</div>
-							
-						</div>
-					
-				</div>
-
-				
-				 
-				          
-
-	</div>
-
- 
-<script type="text/javascript" src='search.js'></script>
-<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
-<script type="text/javascript">
-	var ranks =[];
-	function addRank(rankObj){
-				console.log(rankObj)
-				ranks.push(rankObj)
-	}
-	{{#ranks}}
-	var rank = {};
-	rank['id']={{rank_id}};
-	rank['name'] = '{{name}}';
-	rank['latitude']={{latitude}};
-	rank['longitude']={{longitude}};
-	rank['type']='{{type}}';
-	addRank(rank);
-	{{/ranks}}
-
-		
-    function initMap() {	 			
-				navigator.geolocation.getCurrentPosition(function(location){
-					var directionsDisplay = new google.maps.DirectionsRenderer({
-						    polylineOptions: {
-						      strokeColor: "red"
-						    }
-						  });
-  					var directionsService = new google.maps.DirectionsService;
-					var pinColor = "0000FF";
-				    var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
-				        new google.maps.Size(21, 34),
-				        new google.maps.Point(0,0),
-				        new google.maps.Point(10, 34));
-				    var pinShadow = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
-				        new google.maps.Size(40, 37),
-				        new google.maps.Point(0, 0),
-				        new google.maps.Point(12, 35));
-
-					//document.getElementById('latitude').innerHTML = location.coords.latitude;
-					//document.getElementById('longitude').innerHTML = location.coords.longitude;
-					var myLatLng = {
-					  					lat: parseFloat(document.getElementById('latitude').innerHTML),
-					  					lng: parseFloat(document.getElementById('longitude').innerHTML)
-					  				 };
-					  
-					  var map = new google.maps.Map(document.getElementById('map'), {
-					    zoom: 14
-					    
-					  });
-
-					  directionsDisplay.setMap(map);
-
-					 /* var marker = new google.maps.Marker({
-					    position: myLatLng,
-					    map: map,
-					    title: 'You are here '
-					  });*/
-
-					 
-
-					  ranks.forEach(function(rank){
-					  	    rank['lat']=rank.latitude
-					  	    rank['lng']=rank.longitude
-					  	    if(ranks.indexOf(rank) == 0){
-					  	    	calculateAndDisplayRoute(directionsService, directionsDisplay,rank);
-					  	    }
-					  	    else{
-
-						  	   	var rank = new google.maps.Marker({
-								    position: rank,
-								    map: map,
-								    title: rank.name,
-								    icon: pinImage,
-	                				shadow: pinShadow
-								  });
-						  	 }
-
-					  })
-
-					  function calculateAndDisplayRoute(directionsService, directionsDisplay,rank) {
-						  
-						  directionsService.route({
-						    origin: {
-						    	lat: parseFloat(document.getElementById('latitude').innerHTML),
-						    	lng: parseFloat(document.getElementById('longitude').innerHTML)
-						    },  
-						    destination: {
-						    	lat: rank.lat, 
-						    	lng:rank.lng
-						    },  
-						    travelMode: google.maps.TravelMode['WALKING']
-						  }, function(response, status) {
-						    if (status == google.maps.DirectionsStatus.OK) {
-						      directionsDisplay.setDirections(response);
-						    } else {
-						      window.alert('Directions request failed due to ' + status);
-						    }
-						  });
-						}
-					
-				});
-			}
+                                </p>
+                            </div>
+                        </li>
+                    {{/ranks}}
+                </ul>
+            </div>
+        </div>
+    </div>
 
 
 
 
+    <script type="text/javascript" src='search.js'></script>
+    <script type='text/javascript'>
+      $('.scroll').click(function(){
+        console.log($('.nearby_ranks').offset().top)
+        var distance = $('.nearby_ranks').offset().top
+        console.log('click')
+        $("body").animate({
+              scrollTop: distance
+         });
+      })
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/js/materialize.min.js"></script>
+    <script type="text/javascript">
+        var ranks = [];
+
+        function addRank(rankObj) {
+            console.log(rankObj)
+            ranks.push(rankObj)
+        }
+       {{#ranks}}
+        var rank = {};
+        rank['id'] = {{rank_id}};
+        rank['name'] = '{{name}}';
+        rank['latitude'] = {{latitude}};
+        rank['longitude'] = {{longitude}};
+        rank['type'] = '{{type}}';
+        addRank(rank);
+        {{/ranks}}
+
+
+                function initMap() {
+                    navigator.geolocation.getCurrentPosition(function(location) {
+                        var directionsDisplay = new google.maps.DirectionsRenderer({
+                            polylineOptions: {
+                                strokeColor: "red",
+                                strokeOpacity: 0.8,
+                                strokeWeight: 5,
+                            }
+                        });
+                        var directionsService = new google.maps.DirectionsService;
+                        var pinColor = "0000FF";
+                        var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
+                            new google.maps.Size(21, 34),
+                            new google.maps.Point(0, 0),
+                            new google.maps.Point(10, 34));
+                        var pinShadow = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
+                            new google.maps.Size(40, 37),
+                            new google.maps.Point(0, 0),
+                            new google.maps.Point(12, 35));
+
+                        //document.getElementById('latitude').innerHTML = location.coords.latitude;
+                        //document.getElementById('longitude').innerHTML = location.coords.longitude;
+                        var myLatLng = {
+                            lat: parseFloat(document.getElementById('latitude').innerHTML),
+                            lng: parseFloat(document.getElementById('longitude').innerHTML)
+                        };
+
+                        var map = new google.maps.Map(document.getElementById('map'), {
+                            zoom: 14
+
+                        });
+
+                        directionsDisplay.setMap(map);
+
+                        /* var marker = new google.maps.Marker({
+                           position: myLatLng,
+                           map: map,
+                           title: 'You are here '
+                         });*/
 
 
 
-			//clicking on a nearby rank and showing directions on map
+                        ranks.forEach(function(rank) {
+                            rank['lat'] = rank.latitude
+                            rank['lng'] = rank.longitude
+                            if (ranks.indexOf(rank) == 0) {
+                                calculateAndDisplayRoute(directionsService, directionsDisplay, rank);
+                            } else {
+
+                                var rank = new google.maps.Marker({
+                                    position: rank,
+                                    map: map,
+                                    title: rank.name,
+                                    icon: pinImage,
+                                    shadow: pinShadow
+                                });
+                            }
+
+                        })
+
+                        function calculateAndDisplayRoute(directionsService, directionsDisplay, rank) {
+
+                            directionsService.route({
+                                origin: {
+                                    lat: parseFloat(document.getElementById('latitude').innerHTML),
+                                    lng: parseFloat(document.getElementById('longitude').innerHTML)
+                                },
+                                destination: {
+                                    lat: rank.lat,
+                                    lng: rank.lng
+                                },
+                                travelMode: google.maps.TravelMode['WALKING']
+                            }, function(response, status) {
+                                if (status == google.maps.DirectionsStatus.OK) {
+                                    directionsDisplay.setDirections(response);
+                                } else {
+                                    window.alert('Directions request failed due to ' + status);
+                                }
+                            });
+                        }
+
+                    });
+                }
 
 
+                function mapLocation(ranklat, ranklong) {
+                    console.log(ranklat + ' ' + ranklong)
+                    var directionsDisplay = new google.maps.DirectionsRenderer({
+                        polylineOptions: {
+                            strokeColor: "red"
+                        }
+                    });
+                    var directionsService = new google.maps.DirectionsService;
+                    var pinColor = "0000FF";
+                    var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
+                        new google.maps.Size(21, 34),
+                        new google.maps.Point(0, 0),
+                        new google.maps.Point(10, 34));
+                    var pinShadow = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
+                        new google.maps.Size(40, 37),
+                        new google.maps.Point(0, 0),
+                        new google.maps.Point(12, 35));
 
-			
-			function mapLocation(ranklat,ranklong){
-				console.log(ranklat+' '+ranklong)
-				var directionsDisplay = new google.maps.DirectionsRenderer({
-						    polylineOptions: {
-						      strokeColor: "red"
-						    }
-						  });
-  				var directionsService = new google.maps.DirectionsService;
-				var pinColor = "0000FF";
-				var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + pinColor,
-				        new google.maps.Size(21, 34),
-				        new google.maps.Point(0,0),
-				        new google.maps.Point(10, 34));
-				var pinShadow = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_shadow",
-				        new google.maps.Size(40, 37),
-				        new google.maps.Point(0, 0),
-				        new google.maps.Point(12, 35));
+                    var map = new google.maps.Map(document.getElementById('map'), {
+                        zoom: 20
 
-				var map = new google.maps.Map(document.getElementById('map'), {
-					    zoom: 14
-					    
-				});
+                    });
 
-				var rank = new google.maps.Marker({
-								    position: {lat:ranklat,lng:ranklong},
-								    map: map,
-								    title: 'Nearest Rank',
-								    icon: pinImage,
-	                				shadow: pinShadow
-								  });
-				directionsDisplay.setMap(map);
 
-				calculateAndDisplayRoute(directionsService, directionsDisplay,{lat:ranklat,lng:ranklong});
-				function calculateAndDisplayRoute(directionsService, directionsDisplay,rank) {
-						  
-						  directionsService.route({
-						    origin: {
-						    	lat: parseFloat(document.getElementById('latitude').innerHTML),
-						    	lng: parseFloat(document.getElementById('longitude').innerHTML)
-						    },  
-						    destination: {
-						    	lat: rank.lat, 
-						    	lng:rank.lng
-						    },  
-						    travelMode: google.maps.TravelMode['WALKING']
-						  }, function(response, status) {
-						    if (status == google.maps.DirectionsStatus.OK) {
-						      directionsDisplay.setDirections(response);
-						    } else {
-						      window.alert('Directions request failed due to ' + status);
-						    }
-						  });
-						}
-			}
+                    directionsDisplay.setMap(map);
 
-			
+                    calculateAndDisplayRoute(directionsService, directionsDisplay, {
+                        lat: ranklat,
+                        lng: ranklong
+                    });
 
-			
+                    function calculateAndDisplayRoute(directionsService, directionsDisplay, rank) {
+
+                        directionsService.route({
+                            origin: {
+                                lat: parseFloat(document.getElementById('latitude').innerHTML),
+                                lng: parseFloat(document.getElementById('longitude').innerHTML)
+                            },
+                            destination: {
+                                lat: rank.lat,
+                                lng: rank.lng
+                            },
+                            travelMode: google.maps.TravelMode['WALKING']
+                        }, function(response, status) {
+                            if (status == google.maps.DirectionsStatus.OK) {
+                                directionsDisplay.setDirections(response);
+                            } else {
+                                window.alert('Directions request failed due to ' + status);
+                            }
+                        });
+                    }
+                }
+
     </script>
 
-  <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsKNnCbz8sTyUC1_aPZsxN7iiGElykAS4&signed_in=false&callback=initMap"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA6Bx-T4p5YifwiydMMo5gAS7btlb6bEk8&signed_in=false&callback=initMap"></script>
 </body>
+
 </html>
