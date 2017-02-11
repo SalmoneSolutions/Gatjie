@@ -1,28 +1,60 @@
 <html>
-
+<head>
+<title> Gatjie</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
+	<link rel='stylesheet' type='text/css' href='css/main.css'>
+	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="/js/typed.js"></script>
+	<script>
+		$(function(){
+				$(".hero-text").typed({
+					strings: ["Trying to get somewhere in SA ?","but don't know how to ?","No worries your gatjie is here","Mzansi guide to minibus taxis"],
+					typeSpeed: 20,
+					startDelay:2,
+					backDelay: 1000,
+				});
+		});
+	</script>
+</head>
 <body>
+	<div class="fullscreen-bg">
+			<video loop muted autoplay poster="img/videoframe.jpg" class="fullscreen-bg__video">
+				<source src="video/big_buck_bunny.webm" type="video/webm">
+				<source src="back.mp4" type="video/mp4">
+				<source src="video/big_buck_bunny.ogv" type="video/ogg">
+		</video>
+	</div>
+	<div class='hero-box--black_opaque'>
+		<div class='container header'>
+			<div class='container logo-header-hero'>
+				<img src='/images/logo.png'>
+				<h4 class='hero-text white-text'> </h4>
+			</div>
+		</div>
+	</div>
 <form id='location' action='/location' method="post">
 	<input style='display:none' name='latitude' id='latitude'>
 	<input style='display:none' name='longitude' id='longitude'>
 </form>
 <script type="text/javascript">
-	
+
 	navigator.geolocation.getCurrentPosition(function(location){
 
 					document.getElementById('latitude').value = location.coords.latitude;
 					document.getElementById('longitude').value = location.coords.longitude;
-					
+
 					//document.getElementById('latitude').value = -33.9044802000;
 					//document.getElementById('longitude').value = 18.60810;
-					
-					
-					
-					
+
+
+
+
 					document.getElementById('location').submit();
-					
+
 
 	})
-	
+
 </script>
 </body>
 
