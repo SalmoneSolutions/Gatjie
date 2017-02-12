@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/SalmoneSolutions/Gatjie.png?label=ready&title=Ready)](https://waffle.io/SalmoneSolutions/Gatjie)
 [![Build Status](https://travis-ci.org/mkhonto/lujhay.svg?branch=data_services)](https://travis-ci.org/mkhonto/lujhay)
 [![Code Climate](https://codeclimate.com/github/SalmoneSolutions/Gatjie/badges/gpa.svg)](https://codeclimate.com/github/SalmoneSolutions/Gatjie)
 [![Test Coverage](https://codeclimate.com/github/SalmoneSolutions/Gatjie/badges/coverage.svg)](https://codeclimate.com/github/SalmoneSolutions/Gatjie/coverage)
