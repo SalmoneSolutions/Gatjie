@@ -1,5 +1,5 @@
 [![Stories in Ready](https://badge.waffle.io/SalmoneSolutions/Gatjie.png?label=ready&title=Ready)](https://waffle.io/SalmoneSolutions/Gatjie)
-[![Build Status](https://travis-ci.org/mkhonto/lujhay.svg?branch=data_services)](https://travis-ci.org/mkhonto/lujhay)
+[![Build Status](https://travis-ci.org/SalmoneSolutions/Gatjie.svg?branch=master)](https://travis-ci.org/SalmoneSolutions/Gatjie)
 [![Code Climate](https://codeclimate.com/github/SalmoneSolutions/Gatjie/badges/gpa.svg)](https://codeclimate.com/github/SalmoneSolutions/Gatjie)
 [![Test Coverage](https://codeclimate.com/github/SalmoneSolutions/Gatjie/badges/coverage.svg)](https://codeclimate.com/github/SalmoneSolutions/Gatjie/coverage)
 [![Issue Count](https://codeclimate.com/github/SalmoneSolutions/Gatjie/badges/issue_count.svg)](https://codeclimate.com/github/SalmoneSolutions/Gatjie)
