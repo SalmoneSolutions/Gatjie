@@ -3,6 +3,6 @@
 before_script:
   - npm install
   - mysql -u root -e 'create database test;'
-  - mysql -u root getmethere_test < ./test/test.sql
+  - mysql -u root test < ./test/test.sql
 
 script: mocha
