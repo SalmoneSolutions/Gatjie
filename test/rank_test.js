@@ -7,7 +7,7 @@ var connection = mysql.createConnection({
   host     : 'localhost',
   user     : process.env.MYSQL_USER || 'root',
   password : "",
-  database : 'getmethere_test'
+  database : 'test'
 });
 
 var rankService = new RanksDataService(connection);
