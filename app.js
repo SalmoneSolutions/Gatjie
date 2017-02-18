@@ -21,7 +21,7 @@ var dbOptions = {
 var serviceSetupCallback = function(connection){
 	return {
 		rankService : new rankService(connection)
-    
+
 	}
 };
 
@@ -31,13 +31,13 @@ app.use(myConnection(mysql, dbOptions, 'pool'));
 
 app.use(express.static(__dirname + '/public'));
 
-
 app.use(myConnection(mysql, dbOptions, 'single'));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.engine('handlebars', exphbs({defaultLayout: 'main',layoutsDir:__dirname+'/views/layouts'}));
 app.set('view engine', 'handlebars');
+app.set('views', __dirname+'/views');
 
 var taxiRanks = new rank();
 app.get('/',taxiRanks.getCurrentLocation );
@@ -48,6 +48,5 @@ app.get('/simulation',taxiRanks.runSimulation)
 app.post('/simulation',taxiRanks.simulate)
 app.post('/search',taxiRanks.search)
 
-app.listen(5000, function(){
-	console.log('GetmeThere Running At http://localhost:5000');
-});
+
+module.exports = app;
