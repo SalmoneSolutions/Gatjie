@@ -68,13 +68,13 @@ module.exports = function() {
     this.receiveLocation = function(req, res, next) {
         var location = req.body;
         self.currentLocation = location;
-        res.redirect('/whereami')
+        res.redirect('whereami')
     }
     this.receivedSearch = function(req, res, next) {
         var location = req.body;
 
         self.destinationLocation = location;
-        res.redirect('/whereami')
+        res.redirect('whereami')
     }
     this.runSimulation = function(req, res, next) {
         res.render('simlation')
@@ -83,7 +83,7 @@ module.exports = function() {
     this.simulate = function(req, res, next) {
         var location = req.body;
         self.currentLocation = location;
-        res.redirect('/whereami')
+        res.redirect('whereami')
     }
 
     this.search = function(req, res, next) {
