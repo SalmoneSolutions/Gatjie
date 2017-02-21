@@ -4,7 +4,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.3/css/materialize.min.css">
 	<link rel='stylesheet' type='text/css' href='css/main.css'>
 	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script src="js/typed.js"></script>
 	<script>
 		$(function(){
@@ -19,11 +19,12 @@
 </head>
 <body>
 	<div class="fullscreen-bg">
-			<video controls="controls" 
-       class="video-stream" 
-       x-webkit-airplay="allow" 
-       data-youtube-id="dWUCmYKpQD" 
-       src="http://v20.lscache8.c.youtube.com/videoplayback?sparams=id%2Cexpire%2Cip%2Cipbits%2Citag%2Cratebypass%2Coc%3AU0hPRVRMVV9FSkNOOV9MRllD&amp;itag=43&amp;ipbits=0&amp;signature=D2BCBE2F115E68C5FF97673F1D797F3C3E3BFB99.59252109C7D2B995A8D51A461FF9A6264879948E&amp;sver=3&amp;ratebypass=yes&amp;expire=1300417200&amp;key=yt1&amp;ip=0.0.0.0&amp;id=37da319914f6616c"></video>
+	<video controls="controls" 
+	       class="video-stream" 
+	       x-webkit-airplay="allow" 
+	       data-youtube-id="dWUCmYKpQD" 
+	       src="http://v20.lscache8.c.youtube.com/videoplayback?sparams=id%2Cexpire%2Cip%2Cipbits%2Citag%2Cratebypass%2Coc%3AU0hPRVRMVV9FSkNOOV9MRllD&amp;itag=43&amp;ipbits=0&amp;signature=D2BCBE2F115E68C5FF97673F1D797F3C3E3BFB99.59252109C7D2B995A8D51A461FF9A6264879948E&amp;sver=3&amp;ratebypass=yes&amp;expire=1300417200&amp;key=yt1&amp;ip=0.0.0.0&amp;id=37da319914f6616c">
+	</video>
 	</div>
 	<div class='hero-box--black_opaque'>
 		<div class='container header'>
@@ -41,19 +42,16 @@
 
 	navigator.geolocation.getCurrentPosition(function(location){
 
-					document.getElementById('latitude').value = location.coords.latitude;
-					document.getElementById('longitude').value = location.coords.longitude;
-
-					//document.getElementById('latitude').value = -33.9044802000;
-					//document.getElementById('longitude').value = 18.60810;
+		document.getElementById('latitude').value = location.coords.latitude;
+		document.getElementById('longitude').value = location.coords.longitude;
+		document.getElementById('location').submit();
 
 
-
-
-					document.getElementById('location').submit();
-
-
-	})
+	},function(failure) {
+		    if(failure.message.indexOf("Only secure origins are allowed") == 0) {
+		      alert("Please note due to the recent Change in Google's Maps API this page can no longer retrive your location details over unsercured HTTP")
+		    }
+	)
 
 </script>
 </body>
